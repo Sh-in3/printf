@@ -1,6 +1,23 @@
 #include "main.h"
 
 /**
+ * _strlen - calculate length of a string
+ *
+ * @s: pointer to string
+ * Return: length of string
+ */
+
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	return (len);
+}
+
+/**
  * _printf - a function that does what printf does
  *
  * @format: pointer to a string
@@ -45,13 +62,11 @@ int _printf(const char *format, ...)
 		else if (*format == 's')
 		{
 			char *str = va_arg(args, char*);
-			int str_len = 0;
 
-			while (str[str_len] != '\0')
-				str_len++; /* calculate length of string */
+			int x = _strlen(str); /* calculate length of string */
 
-			write(1, str, str_len);
-			chara_print += str_len; /* write to the standard output */
+			write(1, str, x);
+			chara_print += x; /* write to the standard output */
 		}
 
 		else if (*format == '%')
