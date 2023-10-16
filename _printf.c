@@ -15,6 +15,7 @@ int _printf(const char *format, ...)
 	va_list args; /* list of arguments (after the string[format]) */
 
 	if (format == NULL)
+		printf("main.c")
 		return (-1); /* returns error if string is NULL */
 
 	va_start(args, format);
