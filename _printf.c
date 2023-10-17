@@ -7,62 +7,32 @@
  *
  * Return: number of characters printed
  */
-
 int _printf(const char *format, ...)
 {
-	int chara_print = 0;
-
-	va_list args; /* list of arguments (after the string[format]) */
+	int printed_chars;
+	conver_t f_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_integer},
+		{"i", print_integer},
+		{"b", print_binary},
+		{"r", print_reversed},
+		{"R", rot13},
+		{"u", unsigned_integer},
+		{"o", print_octal},
+		{"x", print_hex},
+		{"X", print_heX},
+		{NULL, NULL}
+	};
+	va_list arg_list;
 
 	if (format == NULL)
-		return (-1); /* returns error if string is NULL */
+		return (-1);
 
-	va_start(args, format);
-
-	while (*format)
-	{
-		if (*format != '%')
-		{
-			write(1, format, 1); /* if no % sign, write to the standard output */
-			chara_print++;
-		}
-
-		else
-		{
-			format++; /* check the next string if there is a % sign*/
-
-		if (*format == '\0')
-			break;
-
-		else if (*format == 'c')
-		{
-			char c = va_arg(args, int);
-
-			write(1, &c, 1);
-			chara_print++;
-		}
-
-		else if (*format == 's')
-		{
-			char *str = va_arg(args, char*);
-			int str_len = 0;
-
-			while (str[str_len] != '\0')
-				str_len++; /* calculate length of string */
-
-			write(1, str, str_len);
-			chara_print += str_len; /* write to the standard output */
-		}
-
-		else if (*format == '%')
-		{
-			write(1, format, 1);
-			chara_print++;
-		}
-		}
-		format++;
-	}
-
-	va_end(args);
-	return (chara_print);
+	va_start(arg_list, format);
+	/*Calling parser function*/
+	printed_chars = parser(format, f_list, arg_list);
+	va_end(arg_list);
+	return (printed_chars);
 }
