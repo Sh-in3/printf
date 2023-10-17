@@ -24,7 +24,6 @@ int _strlen(char *s)
  *
  * Return: number of characters printed
  */
-
 int _printf(const char *format, ...)
 {
 	int chara_print = 0;
@@ -48,32 +47,39 @@ int _printf(const char *format, ...)
 		{
 			format++; /* check the next string if there is a % sign*/
 
-		if (*format == '\0')
-			break;
+			if (*format == '\0')
+				break;
 
-		else if (*format == 'c')
-		{
-			char c = va_arg(args, int);
+			else if (*format == 'c')
+			{
+				char c = va_arg(args, int);
 
-			write(1, &c, 1);
-			chara_print++;
-		}
+				write(1, &c, 1);
+				chara_print++;
+			}
 
-		else if (*format == 's')
-		{
-			char *str = va_arg(args, char*);
+			else if (*format == 's')
+			{
+				char *str = va_arg(args, char*);
 
-			int x = _strlen(str); /* calculate length of string */
+				int x = _strlen(str); /* calculate length of string */
 
-			write(1, str, x);
-			chara_print += x; /* write to the standard output */
-		}
+				write(1, str, x);
+				chara_print += x; /* write to the standard output */
+			}
 
-		else if (*format == '%')
-		{
-			write(1, format, 1);
-			chara_print++;
-		}
+			else if (*format == 'd' || *format == 'i')
+			{
+				int num = va_arg(args, int);
+				digi(num);
+			}
+
+			else if (*format == '%')
+			{
+				write(1, "%", 1);
+				write(1, format, 1);
+				chara_print += 2;
+			}
 		}
 		format++;
 	}
